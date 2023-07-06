@@ -1,7 +1,11 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
+import L from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 interface Country {
   country: string;
@@ -13,6 +17,13 @@ interface Country {
     long: number;
   };
 }
+
+let DefaultIcon = L.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
 
 const Map: React.FC = () => {
   const { data: countriesData, isLoading } = useQuery<Country[]>(
